@@ -1,3 +1,22 @@
+// 定义生成图片路径函数
+var imageFromPath = function(path) {
+  var image = new Image()
+  image.src = path
+  return image
+}
+
+// 定义挡板模块
+var Paddle = function() {
+  var image = imageFromPath('paddle.png')
+  var _o = {
+    img: image,
+    x: 150,
+    y: 700,
+    speed: 8,
+  }
+  return _o
+}
+
 var init = function() {
 
   // for util log
@@ -15,9 +34,10 @@ var init = function() {
   // 按键状态
   var leftDown = false
   var rightDown = false
+
   // for make up image into canvas
   var img = new Image()
-  img.src = './paddle.png'
+  img.src = 'paddle.png'
   img.onload = function() {
     context.drawImage(img, x, y)
   }
@@ -40,8 +60,9 @@ var init = function() {
     }
   })
 
+  // timer
   setInterval(function(){
-  // update x & y
+    // update x & y
     if (leftDown) {
       x -= speed
 
