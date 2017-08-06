@@ -16,8 +16,9 @@ var Game = function() {
   var context = canvas.getContext('2d')
   g.canvas = canvas 
   g.context = context
-
-  
+  g.drawImage = function(imgObj) {
+    g.context.drawImage(imgObj.img, imgObj.x, imgObj.y)
+  }
   // events
   /**
    * 监听键盘注册事件，
@@ -37,7 +38,7 @@ var Game = function() {
   // 按键事件注册
   /**
    * 按键的事件注册，把key和callback传入，使得g的action键名为按下的key
-   * 并且对应的值成为传入的回调函数（也就是要执行的代码）
+   * 并且对应的值成为传入的回调函数
    */
   g.registerAction = function(key, callback) {
     g.actions[key] = callback
@@ -102,21 +103,8 @@ var init = function() {
   game.update = function() {
   }
   game.draw = function() {
-    game.context.drawImage(paddle.img, paddle.x, paddle.y)
+    game.drawImage(paddle)
   }
-
-  // timer
-  // setInterval(function(){
-  //   // update x & y
-  //   if (leftDown) {
-  //     paddle.moveLeft()
-  //   }else if(rightDown){
-  //     paddle.moveRight()
-  //   }
-  //   // refresh draw
-  //   context.clearRect(0, 0, canvas.width, canvas.height);
-  //   context.drawImage(paddle.img, paddle.x, paddle.y)
-  // }, 1000/60)
 
 }
 
