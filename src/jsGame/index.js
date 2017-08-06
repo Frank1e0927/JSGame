@@ -10,6 +10,11 @@ var init = function() {
   // 挡板变量坐标
   var x = 150
   var y = 700
+  var speed = 8
+
+  // 按键状态
+  var leftDown = false
+  var rightDown = false
   // for make up image into canvas
   var img = new Image()
   img.src = './paddle.png'
@@ -20,21 +25,34 @@ var init = function() {
   // event
   window.addEventListener('keydown', function(event){
     var _k = event.key
-    if(_k == 'a') {
-      x -= 10
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(img, x, y)
-    }else if (_k == 'd') {
-      x += 10
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(img, x, y)
+    if(_k == 'ArrowLeft') {
+      leftDown = true
+    }else if (_k == 'ArrowRight') {
+      rightDown = true
     }
   })
-  // clear canvas 
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  // window.addEventListener('keyup', function(event){
-    
-  // })
+  window.addEventListener('keyup', function(event){
+    var _k = event.key
+    if(_k == 'ArrowLeft') {
+      leftDown = false
+    }else if (_k == 'ArrowRight') {
+      rightDown = false
+    }
+  })
+
+  setInterval(function(){
+  // update x & y
+    if (leftDown) {
+      x -= speed
+
+    }else if(rightDown){
+      x += speed
+    }
+    // refresh draw
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, x, y)
+  }, 1000/60)
+
 }
 
 init()
