@@ -14,8 +14,15 @@ var Paddle = function() {
     y: 700,
     speed: 8,
   }
+  _o.moveLeft = function() {
+    _o.x -= _o.speed
+  }
+  _o.moveRight = function() {
+    _o.x += _o.speed
+  }
   return _o
 }
+
 
 var init = function() {
 
@@ -36,11 +43,7 @@ var init = function() {
   var rightDown = false
 
   // for make up image into canvas
-  var img = new Image()
-  img.src = 'paddle.png'
-  img.onload = function() {
-    context.drawImage(img, x, y)
-  }
+  var paddle = Paddle()
 
   // event
   window.addEventListener('keydown', function(event){
@@ -64,14 +67,13 @@ var init = function() {
   setInterval(function(){
     // update x & y
     if (leftDown) {
-      x -= speed
-
+      paddle.moveLeft()
     }else if(rightDown){
-      x += speed
+      paddle.moveRight()
     }
     // refresh draw
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(img, x, y)
+    context.drawImage(paddle.img, paddle.x, paddle.y)
   }, 1000/60)
 
 }
