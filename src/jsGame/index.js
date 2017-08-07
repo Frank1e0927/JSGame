@@ -82,7 +82,26 @@ var Paddle = function() {
   }
   return _o
 }
-
+// 定义碰撞球模块
+var Ball = function() {
+  var image = imageFromPath('ball.png')
+  var _o = {
+    img: image,
+    x: 150,
+    y: 700,
+    speed: 10,
+    fired: false
+  }
+  _o.move = function() {
+    if(_o.fired) {
+      console.log('move')
+    }
+  }
+  _o.fire = function() {
+    _o.fired = true
+  }
+  return _o
+}
 
 var init = function() {
 
@@ -93,6 +112,7 @@ var init = function() {
 
   // for make up image into canvas
   var paddle = Paddle()
+  var ball = Ball()
 
   game.registerAction('ArrowLeft' , function(){
     paddle.moveLeft()
@@ -100,10 +120,15 @@ var init = function() {
   game.registerAction('ArrowRight' , function(){
     paddle.moveRight()
   })
+  game.registerAction('f' , function(){
+    ball.fire()
+  })
   game.update = function() {
+    ball.move()
   }
   game.draw = function() {
     game.drawImage(paddle)
+    game.drawImage(ball)
   }
 
 }
