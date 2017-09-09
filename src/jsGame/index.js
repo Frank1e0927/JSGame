@@ -80,6 +80,10 @@ var Paddle = function() {
   _o.moveRight = function() {
     _o.x += _o.speed
   }
+  _o.collide = function(shape) {
+    if(shape.y + shape.img.height > _o.y){
+    }
+  }
   return _o
 }
 // 定义碰撞球模块
@@ -89,12 +93,21 @@ var Ball = function() {
     img: image,
     x: 150,
     y: 700,
-    speed: 10,
+    speedX: 10,
+    speedY: 10,
     fired: false
   }
   _o.move = function() {
     if(_o.fired) {
-      console.log('move')
+      if(_o.x < 0 || _o.x > 600){
+        _o.speedX = -_o.speedX
+      }
+      if(_o.y < 0 || _o.y > 800){
+        _o.speedY = -_o.speedY
+      }
+      // move
+      _o.x += _o.speedX
+      _o.y += _o.speedY
     }
   }
   _o.fire = function() {
@@ -125,6 +138,10 @@ var init = function() {
   })
   game.update = function() {
     ball.move()
+    // 判断香蕉
+    if(paddle.collide(ball)){
+      ball.speedY *= -1
+    }
   }
   game.draw = function() {
     game.drawImage(paddle)
